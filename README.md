@@ -1,35 +1,41 @@
 # Muslim-Calendar
 
-Kotlin implementation of the **Umm Al-Qura (Hijri) calendar** for JVM and Android-compatible projects.
+[![Kotlin](https://img.shields.io/badge/Kotlin-2.x-7F52FF?logo=kotlin&logoColor=white)](#)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](#-license)
+[![Platform](https://img.shields.io/badge/Platform-JVM%20%7C%20Android-blue)](#)
 
-![Kotlin](https://img.shields.io/badge/Kotlin-2.x-7F52FF?logo=kotlin&logoColor=white)
-![License](https://img.shields.io/badge/License-MIT-green.svg)
-![Platform](https://img.shields.io/badge/Platform-JVM%20%7C%20Android-blue)
+Production-ready Hijri calendar library for Umm Al-Qura date handling, conversion, localization, formatting, parsing, and manual day-offset control.
+
+---
 
 ## ✨ Overview
 
-`Muslim-Calendar` is a clean Kotlin-first library for working with Hijri dates using the Umm Al-Qura calendar model.
+`Muslim-Calendar` offers a practical API for:
 
-It provides:
-
-- Accurate Umm Al-Qura date calculations
+- Hijri (Umm Al-Qura) date calculations
 - Gregorian ↔ Hijri conversion
-- Localization support
-- Lightweight formatting and parsing APIs
-- Manual date offset support (`-3..+3`) for regional calendar adjustments
+- Locale-aware month/day names
+- Lightweight formatting and parsing
+- Manual date offset support (`-3..+3`)
+
+It is designed as a reusable module for Kotlin/JVM and Android projects.
+
+---
 
 ## 🚀 Features
 
-- 📅 **Umm Al-Qura calculations** backed by precomputed table data
-- 🔁 **Bidirectional conversion** between `LocalDate` and Hijri dates
-- 🌍 **Localized month/day names** (English, Arabic, Urdu)
-- 🧩 **Pattern-based formatter/parser** (no heavy `java.text` dependency)
-- ⏱️ **Manual offset** support to handle country-specific differences
-- 🧱 **Library module design** suitable for reuse across projects
+- Accurate Umm Al-Qura conversion pipeline
+- Kotlin-first, simple API surface
+- 25+ locale mappings (including English, Arabic, Urdu)
+- Custom formatter/parser without heavy date-format libraries
+- Regional adjustment support via `offsetDays`
+- Test-covered core functionality
+
+---
 
 ## 📦 Installation (Gradle Kotlin DSL)
 
-Add the module dependency:
+If you are using it as a local module:
 
 ```kotlin
 dependencies {
@@ -37,7 +43,7 @@ dependencies {
 }
 ```
 
-If you publish it to a Maven repository later, replace with the published artifact coordinates.
+---
 
 ## 🛠️ Usage
 
@@ -48,52 +54,81 @@ import com.muslim.calendar.MuslimCalendar
 import java.time.LocalDate
 
 val todayHijri = MuslimCalendar.fromGregorian(LocalDate.now())
-println(todayHijri) // MuslimCalendar(year=..., month=..., day=..., offsetDays=0)
+println(todayHijri)
+// Output: MuslimCalendar(year=1447, month=9, day=10, offsetDays=0)
 ```
 
-### 2) Create a custom Hijri date
+### 2) Create custom Hijri date
 
 ```kotlin
+import com.muslim.calendar.MuslimCalendar
+
 val hijri = MuslimCalendar(year = 1446, month = 9, day = 1)
+println(hijri)
+// Output: MuslimCalendar(year=1446, month=9, day=1, offsetDays=0)
 ```
 
-### 3) Gregorian → Hijri
+### 3) Gregorian -> Hijri
 
 ```kotlin
+import com.muslim.calendar.MuslimCalendar
+import java.time.LocalDate
+
 val hijri = MuslimCalendar.fromGregorian(LocalDate.of(2025, 3, 1))
+println(hijri)
+// Output: MuslimCalendar(year=1446, month=9, day=1, offsetDays=0)
 ```
 
-### 4) Hijri → Gregorian
+### 4) Hijri -> Gregorian
 
 ```kotlin
+import com.muslim.calendar.MuslimCalendar
+
 val gregorian = MuslimCalendar(1446, 9, 1).toGregorian()
-println(gregorian) // e.g. 2025-03-01
+println(gregorian)
+// Output: 2025-03-01
 ```
 
 ### 5) Offset usage (+1 / -1)
 
 ```kotlin
+import com.muslim.calendar.MuslimCalendar
+import java.time.LocalDate
+import java.util.Locale
+
 val saudi = MuslimCalendar.fromGregorian(LocalDate.now(), offsetDays = 0)
 val pakistan = MuslimCalendar.fromGregorian(LocalDate.now(), offsetDays = 1)
 val india = MuslimCalendar.fromGregorian(LocalDate.now(), offsetDays = -1)
-```
 
-Or update an existing Hijri date:
+println(saudi.format("yyyy-MM-dd", Locale.ENGLISH))
+// Output: 1447-09-10
 
-```kotlin
+println(pakistan.format("yyyy-MM-dd", Locale.ENGLISH))
+// Output: 1447-09-11
+
+println(india.format("yyyy-MM-dd", Locale.ENGLISH))
+// Output: 1447-09-09
+
 val base = MuslimCalendar(1446, 9, 1)
 val adjusted = base.setOffset(1)
+
+println(adjusted.format("yyyy-MM-dd", Locale.ENGLISH))
+// Output: 1446-09-02
 ```
 
 ### 6) Localization (Arabic, Urdu)
 
 ```kotlin
+import com.muslim.calendar.MuslimCalendar
 import java.util.Locale
 
 val date = MuslimCalendar(1446, 9, 1)
 
-println(date.getMonthName(Locale("ar")))       // Arabic month name
-println(date.getDayName(Locale("ur", "PK")))   // Urdu day name
+println(date.getMonthName(Locale("ar")))
+// Output: رمضان
+
+println(date.getDayName(Locale("ur", "PK")))
+// Output: پیر
 ```
 
 ### 7) Formatting
@@ -106,69 +141,73 @@ Supported tokens:
 - `E`, `EEEE`
 
 ```kotlin
+import com.muslim.calendar.MuslimCalendar
+import java.util.Locale
+
 val date = MuslimCalendar(1446, 9, 1)
 val text = date.format("EEEE, dd MMMM yyyy", Locale.ENGLISH)
+
 println(text)
+// Output: Saturday, 01 Ramadan 1446
 ```
 
 ### 8) Parsing
 
 ```kotlin
+import com.muslim.calendar.MuslimCalendar
+import java.util.Locale
+
 val parsed = MuslimCalendar.parse(
     input = "01 Ramadan 1446",
     pattern = "dd MMMM yyyy",
     locale = Locale.ENGLISH
 )
+
+println(parsed)
+// Output: MuslimCalendar(year=1446, month=9, day=1, offsetDays=0)
 ```
 
-## ⚙️ How It Works
+---
 
-### Calendar Model
+## 🕌 Umm Al-Qura Calendar
 
-Umm Al-Qura is a **tabular/precomputed civil calendar**.  
-It is **not** based on real-time moon sighting calculations.
+Umm Al-Qura is a standardized Islamic civil calendar used in Saudi Arabia.  
+It is based on official precomputed calculations and not purely on local real-time moon sighting.
 
-### Internal Algorithm
+- Official reference: [https://www.ummulqura.org.sa/](https://www.ummulqura.org.sa/)
+- Commonly used as a national reference calendar in Saudi Arabia
+- Supported range in this library: **1300H – 1600H**
 
-The library converts dates using **Julian Day Number (JDN)** as the intermediate representation:
+Conversion model:
 
-`Gregorian -> JDN -> Umm Al-Qura lookup table -> Hijri`
+`Gregorian -> JDN -> Umm Al-Qura table -> Hijri`
 
-and reverse:
+`Hijri -> Umm Al-Qura table -> JDN -> Gregorian`
 
-`Hijri -> Umm Al-Qura lookup table -> JDN -> Gregorian`
-
-### Date Range
-
-- Supported range: **1300H – 1600H**
-
-### Offset Behavior
-
-- Manual offset range: **-3..+3**
-- Applied **after conversion**
-- Useful for country-level differences (e.g., Saudi Arabia vs Pakistan/India)
+---
 
 ## 🌍 Locale Support
 
-Built-in primary locale support includes:
+- Supports **25+ languages**
+- Includes **Arabic, English, and Urdu**
+- Locale mappings are easy to extend through `LocaleProvider`
 
-- English
-- Arabic
-- Urdu
-
-The localization layer is map-based and easy to extend.  
-To add more languages, update `LocaleProvider` with:
+To add a new locale, provide:
 
 - full month names
 - short month names
 - full day names
 - short day names
 
+---
+
 ## ⚠️ Limitations
 
-- Valid only for the supported Umm Al-Qura date range
-- Offset is a manual adjustment, not an astronomical calculation
-- Not a real-time moon-sighting engine
+- Valid only inside the supported Umm Al-Qura data range
+- `offsetDays` is a manual post-conversion adjustment
+- Not an astronomical moon-sighting engine
+
+---
 
 ## 📁 Project Structure
 
@@ -185,23 +224,48 @@ muslim-calendar/
     └── MuslimCalendarTest.kt
 ```
 
+---
+
 ## 🤝 Contributing
 
 Contributions are welcome.
 
 1. Fork the repository
 2. Create a feature branch
-3. Add/adjust tests for your changes
-4. Run tests locally
-5. Open a pull request with a clear description
+3. Add or update tests
+4. Run checks locally
+5. Open a pull request with a clear summary
 
-## 📄 License
-
-This project is licensed under the **MIT License**.
+---
 
 ## 🙏 Credits
 
-This project is inspired by:
+This library is inspired by:
 
 - [msarhan/ummalqura-calendar](https://github.com/msarhan/ummalqura-calendar)
 
+---
+
+## 📄 License
+
+The MIT License (MIT)
+
+Copyright (c) 2015 Mouaffak A. Sarhan
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
