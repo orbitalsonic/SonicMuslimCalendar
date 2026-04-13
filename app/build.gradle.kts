@@ -37,7 +37,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":muslim-calendar"))
+    implementation(project(":sonic-muslim-calendar"))
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

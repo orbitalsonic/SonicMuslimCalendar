@@ -9,7 +9,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/muslim-calendar" />
+            <option value="$PROJECT_DIR$/sonic-muslim-calendar" />
           </set>
         </option>
       </GradleProjectSettings>

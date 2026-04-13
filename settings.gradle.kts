@@ -24,5 +24,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "Muslim Calendar"
 include(":app")
-include(":muslim-calendar")
+include(":sonic-muslim-calendar")
  
