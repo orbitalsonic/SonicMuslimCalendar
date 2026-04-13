@@ -223,6 +223,23 @@ println("Is leap year (${customHijri.year}): ${MuslimCalendar.isLeapYear(customH
 - Supports **25+ languages**
 - Includes **Arabic, English, and Urdu**
 - Locale mappings are easy to extend through `LocaleProvider`
+  
+| Code | Language   | Code | Language    |
+| ---- | ---------- | ---- | ----------- |
+| en   | English    | ar   | Arabic      |
+| ur   | Urdu       | id   | Indonesian  |
+| hi   | Hindi      | bn   | Bengali     |
+| fa   | Persian    | tr   | Turkish     |
+| am   | Amharic    | fr   | French      |
+| ms   | Malay      | az   | Azerbaijani |
+| kk   | Kazakh     | ky   | Kyrgyz      |
+| tg   | Tajik      | ru   | Russian     |
+| de   | German     | sv   | Swedish     |
+| th   | Thai       | fil  | Filipino    |
+| ja   | Japanese   | es   | Spanish     |
+| ko   | Korean     | sw   | Swahili     |
+| pt   | Portuguese |      |             |
+
 
 To add a new locale, provide:
 
