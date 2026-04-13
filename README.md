@@ -1,11 +1,14 @@
-# Muslim-Calendar
+[![](https://jitpack.io/v/orbitalsonic/SonicOPT.svg)](https://jitpack.io/#orbitalsonic/SonicOPT)
 
-[![Kotlin](https://img.shields.io/badge/Kotlin-2.x-7F52FF?logo=kotlin&logoColor=white)](#)
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](#-license)
-[![Platform](https://img.shields.io/badge/Platform-JVM%20%7C%20Android-blue)](#)
+# Sonic-Muslim-Calendar
 
-Production-ready Hijri calendar library for Umm Al-Qura date handling, conversion, localization, formatting, parsing, and manual day-offset control.
+**Sonic-Muslim-Calendar** is a lightweight library for working with Hijri dates using the Umm Al-Qura calendar system.
 
+The Umm Al-Qura calendar is a standardized Islamic civil calendar officially used in Saudi Arabia, based on precomputed astronomical data rather than real-time moon sighting.
+
+- 🌐 Official reference: https://www.ummulqura.org.sa/
+- 📍 National reference calendar in Saudi Arabia
+- 📆 Supported range: **1300H – 1600H**
 ---
 
 ## ✨ Overview
@@ -42,6 +45,51 @@ dependencies {
     implementation(project(":muslim-calendar"))
 }
 ```
+---
+
+## Setup
+
+### Step 1: Add Maven Repository
+Add the following to your project-level build script (`build.gradle` or `settings.gradle`) for **Groovy** or **Kotlin DSL**:
+
+#### Groovy DSL
+```groovy
+repositories {
+   google()
+   mavenCentral()
+   maven { url "https://jitpack.io" }
+}
+```
+
+#### Kotlin DSL
+```kotlin
+repositories {
+    google()
+    mavenCentral()
+    maven { setUrl("https://jitpack.io") }
+}
+```
+
+### Step 2: Add Dependency
+Include the OPT library in your app-level build script (`build.gradle` or `build.gradle.kts`). Replace `x.x.x` with the latest version: [![](https://jitpack.io/v/orbitalsonic/SonicOPT.svg)](https://jitpack.io/#orbitalsonic/SonicOPT)
+
+
+#### Groovy DSL
+```groovy
+dependencies {
+    implementation 'com.github.orbitalsonic:SonicMuslimCalendar:x.x.x'
+}
+```
+
+#### Kotlin DSL
+```kotlin
+dependencies {
+    implementation("com.github.orbitalsonic:SonicMuslimCalendar:x.x.x")
+}
+```
+
+### Step 3: Sync Gradle
+Sync your Gradle project to fetch the dependency.
 
 ---
 
@@ -50,85 +98,84 @@ dependencies {
 ### 1) Get current Hijri date
 
 ```kotlin
-import com.muslim.calendar.MuslimCalendar
-import java.time.LocalDate
+val today = LocalDate.of(2026, 4, 13)
+val currentHijri = MuslimCalendar.fromGregorian(today)
 
-val todayHijri = MuslimCalendar.fromGregorian(LocalDate.now())
-println(todayHijri)
-// Output: MuslimCalendar(year=1447, month=9, day=10, offsetDays=0)
+println("Today (Gregorian): $today")
+// Output: Today (Gregorian): 2026-04-13
+
+println("Current Hijri Date: ${currentHijri.year} ${currentHijri.getMonthName(Locale.ENGLISH)} ${currentHijri.day}")
+// Output: Current Hijri Date: 1447 Shawwal 25
 ```
 
 ### 2) Create custom Hijri date
 
 ```kotlin
-import com.muslim.calendar.MuslimCalendar
-
-val hijri = MuslimCalendar(year = 1446, month = 9, day = 1)
+val hijri = MuslimCalendar(year = 1446, month = 9, day = 10)
 println(hijri)
-// Output: MuslimCalendar(year=1446, month=9, day=1, offsetDays=0)
+// Output: MuslimCalendar(year=1446, month=9, day=10, offsetDays=0)
 ```
 
 ### 3) Gregorian -> Hijri
 
 ```kotlin
-import com.muslim.calendar.MuslimCalendar
-import java.time.LocalDate
+val today = LocalDate.of(2026, 4, 13)
+val convertedFromGregorian = MuslimCalendar.fromGregorian(today)
 
-val hijri = MuslimCalendar.fromGregorian(LocalDate.of(2025, 3, 1))
-println(hijri)
-// Output: MuslimCalendar(year=1446, month=9, day=1, offsetDays=0)
+println("Gregorian $today -> Hijri ${convertedFromGregorian.format("dd MMMM yyyy", Locale.ENGLISH)}")
+// Output: Gregorian 2026-04-13 -> Hijri 25 Shawwal 1447
 ```
 
 ### 4) Hijri -> Gregorian
 
 ```kotlin
-import com.muslim.calendar.MuslimCalendar
+val customHijri = MuslimCalendar(1446, 9, 10)
+val customGregorian = customHijri.toGregorian()
 
-val gregorian = MuslimCalendar(1446, 9, 1).toGregorian()
-println(gregorian)
-// Output: 2025-03-01
+println("Custom Hijri: ${customHijri.format("dd MMMM yyyy", Locale.ENGLISH)}")
+// Output: Custom Hijri: 10 Ramadan 1446
+
+println("Converted Gregorian: $customGregorian")
+// Output: Converted Gregorian: 2025-03-10
 ```
 
 ### 5) Offset usage (+1 / -1)
 
 ```kotlin
-import com.muslim.calendar.MuslimCalendar
-import java.time.LocalDate
-import java.util.Locale
+val customHijri = MuslimCalendar(1446, 9, 10)
+val offsetZero = customHijri.setOffset(0)
+val offsetPlus = customHijri.setOffset(1)
+val offsetMinus = customHijri.setOffset(-1)
 
-val saudi = MuslimCalendar.fromGregorian(LocalDate.now(), offsetDays = 0)
-val pakistan = MuslimCalendar.fromGregorian(LocalDate.now(), offsetDays = 1)
-val india = MuslimCalendar.fromGregorian(LocalDate.now(), offsetDays = -1)
+println("Offset 0 : ${offsetZero.format("dd MMMM yyyy", Locale.ENGLISH)}")
+// Output: Offset 0 : 10 Ramadan 1446
 
-println(saudi.format("yyyy-MM-dd", Locale.ENGLISH))
-// Output: 1447-09-10
+println("Offset +1: ${offsetPlus.format("dd MMMM yyyy", Locale.ENGLISH)}")
+// Output: Offset +1: 11 Ramadan 1446
 
-println(pakistan.format("yyyy-MM-dd", Locale.ENGLISH))
-// Output: 1447-09-11
-
-println(india.format("yyyy-MM-dd", Locale.ENGLISH))
-// Output: 1447-09-09
+println("Offset -1: ${offsetMinus.format("dd MMMM yyyy", Locale.ENGLISH)}")
+// Output: Offset -1: 09 Ramadan 1446
 
 val base = MuslimCalendar(1446, 9, 1)
 val adjusted = base.setOffset(1)
 
-println(adjusted.format("yyyy-MM-dd", Locale.ENGLISH))
-// Output: 1446-09-02
+println(adjusted.format("dd MMMM yyyy", Locale.ENGLISH))
+// Output: 02 Ramadan 1446
 ```
 
 ### 6) Localization (Arabic, Urdu)
 
 ```kotlin
-import com.muslim.calendar.MuslimCalendar
-import java.util.Locale
+val date = MuslimCalendar(1446, 9, 10)
 
-val date = MuslimCalendar(1446, 9, 1)
+println("English: ${date.getDayName(Locale.ENGLISH)}, ${date.getMonthName(Locale.ENGLISH)}")
+// Output: English: Monday, Ramadan
 
-println(date.getMonthName(Locale("ar")))
-// Output: رمضان
+println("Arabic : ${date.getDayName(Locale("ar"))}, ${date.getMonthName(Locale("ar"))}")
+// Output: Arabic : الاثنين, رمضان
 
-println(date.getDayName(Locale("ur", "PK")))
-// Output: پیر
+println("Urdu   : ${date.getDayName(Locale("ur", "PK"))}, ${date.getMonthName(Locale("ur", "PK"))}")
+// Output: Urdu   : پیر, رمضان
 ```
 
 ### 7) Formatting
@@ -141,48 +188,46 @@ Supported tokens:
 - `E`, `EEEE`
 
 ```kotlin
-import com.muslim.calendar.MuslimCalendar
-import java.util.Locale
+val date = MuslimCalendar(1446, 9, 10)
 
-val date = MuslimCalendar(1446, 9, 1)
-val text = date.format("EEEE, dd MMMM yyyy", Locale.ENGLISH)
+println("Pattern [dd MMMM yyyy]: ${date.format("dd MMMM yyyy", Locale.ENGLISH)}")
+// Output: Pattern [dd MMMM yyyy]: 10 Ramadan 1446
 
-println(text)
-// Output: Saturday, 01 Ramadan 1446
+println("Pattern [EEEE, d MMMM yyyy]: ${date.format("EEEE, d MMMM yyyy", Locale.ENGLISH)}")
+// Output: Pattern [EEEE, d MMMM yyyy]: Monday, 10 Ramadan 1446
 ```
 
 ### 8) Parsing
 
 ```kotlin
-import com.muslim.calendar.MuslimCalendar
-import java.util.Locale
-
+val parseInput = "10 Ramadan 1446"
 val parsed = MuslimCalendar.parse(
-    input = "01 Ramadan 1446",
+    input = parseInput,
     pattern = "dd MMMM yyyy",
     locale = Locale.ENGLISH
 )
 
-println(parsed)
-// Output: MuslimCalendar(year=1446, month=9, day=1, offsetDays=0)
+println("Input: $parseInput")
+// Output: Input: 10 Ramadan 1446
+
+println("Parsed: ${parsed.format("dd MMMM yyyy", Locale.ENGLISH)}")
+// Output: Parsed: 10 Ramadan 1446
 ```
 
----
+### 9) Month & Year info
 
-## 🕌 Umm Al-Qura Calendar
+```kotlin
+val customHijri = MuslimCalendar(1446, 9, 10)
 
-Umm Al-Qura is a standardized Islamic civil calendar used in Saudi Arabia.  
-It is based on official precomputed calculations and not purely on local real-time moon sighting.
+println("Length of month (${customHijri.month}/${customHijri.year}): ${MuslimCalendar.lengthOfMonth(customHijri.year, customHijri.month)} days")
+// Output: Length of month (9/1446): 29 days
 
-- Official reference: [https://www.ummulqura.org.sa/](https://www.ummulqura.org.sa/)
-- Commonly used as a national reference calendar in Saudi Arabia
-- Supported range in this library: **1300H – 1600H**
+println("Length of year (${customHijri.year}): ${MuslimCalendar.lengthOfYear(customHijri.year)} days")
+// Output: Length of year (1446): 354 days
 
-Conversion model:
-
-`Gregorian -> JDN -> Umm Al-Qura table -> Hijri`
-
-`Hijri -> Umm Al-Qura table -> JDN -> Gregorian`
+println("Is leap year (${customHijri.year}): ${MuslimCalendar.isLeapYear(customHijri.year)}")
+// Output: Is leap year (1446): false
+```
 
 ---
 
@@ -209,63 +254,24 @@ To add a new locale, provide:
 
 ---
 
-## 📁 Project Structure
-
-```text
-muslim-calendar/
-├── src/main/kotlin/com/muslim/calendar/
-│   ├── MuslimCalendar.kt
-│   ├── UmmAlQuraData.kt
-│   ├── HijriConverter.kt
-│   ├── Formatter.kt
-│   ├── Parser.kt
-│   └── LocaleProvider.kt
-└── src/test/kotlin/com/muslim/calendar/
-    └── MuslimCalendarTest.kt
-```
+## Contributing
+Contributions are welcome! Fork the repository, make changes, and submit a pull request.
 
 ---
 
-## 🤝 Contributing
+## License
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
-Contributions are welcome.
+Copyright OrbitalSonic
 
-1. Fork the repository
-2. Create a feature branch
-3. Add or update tests
-4. Run checks locally
-5. Open a pull request with a clear summary
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
 
----
+    http://www.apache.org/licenses/LICENSE-2.0
 
-## 🙏 Credits
-
-This library is inspired by:
-
-- [msarhan/ummalqura-calendar](https://github.com/msarhan/ummalqura-calendar)
-
----
-
-## 📄 License
-
-The MIT License (MIT)
-
-Copyright (c) 2015 Mouaffak A. Sarhan
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
