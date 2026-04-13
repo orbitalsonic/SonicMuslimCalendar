@@ -64,7 +64,7 @@ Include the OPT library in your app-level build script (`build.gradle` or `build
 
 #### Groovy DSL
 ```groovy
-    implementation 'com.github.orbitalsonic:SonicMuslimCalendar:x.x.x'
+implementation 'com.github.orbitalsonic:SonicMuslimCalendar:x.x.x'
 
 ```
 
