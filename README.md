@@ -83,6 +83,7 @@ Sync your Gradle project to fetch the dependency.
 ### 1) Get current Hijri date
 
 ```kotlin
+// val today = LocalDate.now()
 val today = LocalDate.of(2026, 4, 13)
 val currentHijri = MuslimCalendar.fromGregorian(today)
 
