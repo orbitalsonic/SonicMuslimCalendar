@@ -1,4 +1,5 @@
-[![](https://jitpack.io/v/orbitalsonic/SonicOPT.svg)](https://jitpack.io/#orbitalsonic/SonicOPT)
+[![](https://jitpack.io/v/orbitalsonic/SonicMuslimCalendar.svg)](https://jitpack.io/#orbitalsonic/SonicMuslimCalendar)
+
 
 # Sonic-Muslim-Calendar
 
@@ -58,7 +59,7 @@ repositories {
 ```
 
 ### Step 2: Add Dependency
-Include the OPT library in your app-level build script (`build.gradle` or `build.gradle.kts`). Replace `x.x.x` with the latest version: [![](https://jitpack.io/v/orbitalsonic/SonicOPT.svg)](https://jitpack.io/#orbitalsonic/SonicOPT)
+Include the OPT library in your app-level build script (`build.gradle` or `build.gradle.kts`). Replace `x.x.x` with the latest version: [![](https://jitpack.io/v/orbitalsonic/SonicMuslimCalendar.svg)](https://jitpack.io/#orbitalsonic/SonicMuslimCalendar)
 
 
 #### Groovy DSL
