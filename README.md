@@ -9,7 +9,6 @@ The Umm Al-Qura calendar is a standardized Islamic civil calendar officially use
 - 🌐 Official reference: https://www.ummulqura.org.sa/
 - 📍 National reference calendar in Saudi Arabia
 - 📆 Supported range: **1300H – 1600H**
----
 
 ## ✨ Overview
 
@@ -23,7 +22,6 @@ The Umm Al-Qura calendar is a standardized Islamic civil calendar officially use
 
 It is designed as a reusable module for Kotlin/JVM and Android projects.
 
----
 
 ## 🚀 Features
 
@@ -34,17 +32,6 @@ It is designed as a reusable module for Kotlin/JVM and Android projects.
 - Regional adjustment support via `offsetDays`
 - Test-covered core functionality
 
----
-
-## 📦 Installation (Gradle Kotlin DSL)
-
-If you are using it as a local module:
-
-```kotlin
-dependencies {
-    implementation(project(":muslim-calendar"))
-}
-```
 ---
 
 ## Setup
@@ -251,6 +238,7 @@ To add a new locale, provide:
 - Valid only inside the supported Umm Al-Qura data range
 - `offsetDays` is a manual post-conversion adjustment
 - Not an astronomical moon-sighting engine
+- Supported range: 1300H – 1600H
 
 ---
 
