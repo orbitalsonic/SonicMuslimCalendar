@@ -104,6 +104,7 @@ println(hijri)
 ### 3) Gregorian -> Hijri
 
 ```kotlin
+// val today = LocalDate.now()
 val today = LocalDate.of(2026, 4, 13)
 val convertedFromGregorian = MuslimCalendar.fromGregorian(today)
 
