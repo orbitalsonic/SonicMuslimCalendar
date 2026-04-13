@@ -64,16 +64,13 @@ Include the OPT library in your app-level build script (`build.gradle` or `build
 
 #### Groovy DSL
 ```groovy
-dependencies {
     implementation 'com.github.orbitalsonic:SonicMuslimCalendar:x.x.x'
-}
+
 ```
 
 #### Kotlin DSL
 ```kotlin
-dependencies {
-    implementation("com.github.orbitalsonic:SonicMuslimCalendar:x.x.x")
-}
+implementation("com.github.orbitalsonic:SonicMuslimCalendar:x.x.x")
 ```
 
 ### Step 3: Sync Gradle
@@ -232,8 +229,6 @@ To add a new locale, provide:
 - full day names
 - short day names
 
----
-
 ## ⚠️ Limitations
 
 - Valid only inside the supported Umm Al-Qura data range
@@ -241,12 +236,8 @@ To add a new locale, provide:
 - Not an astronomical moon-sighting engine
 - Supported range: 1300H – 1600H
 
----
-
 ## Contributing
 Contributions are welcome! Fork the repository, make changes, and submit a pull request.
-
----
 
 ## License
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
