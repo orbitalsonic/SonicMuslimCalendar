@@ -5,11 +5,7 @@
 
 **Sonic-Muslim-Calendar** is a lightweight library for working with Hijri dates using the Umm Al-Qura calendar system.
 
-The Umm Al-Qura calendar is a standardized Islamic civil calendar officially used in Saudi Arabia, based on precomputed astronomical data rather than real-time moon sighting.
-
-- 🌐 Official reference: https://www.ummulqura.org.sa/
-- 📍 National reference calendar in Saudi Arabia
-- 📆 Supported range: **1300H – 1600H**
+The [Umm Al-Qura calendar](https://www.ummulqura.org.sa/) is a standardized Islamic civil calendar officially used in Saudi Arabia, based on precomputed astronomical data rather than real-time moon sighting.
 
 ## ✨ Overview
 
@@ -17,19 +13,9 @@ The Umm Al-Qura calendar is a standardized Islamic civil calendar officially use
 
 - Hijri (Umm Al-Qura) date calculations
 - Gregorian ↔ Hijri conversion
-- Locale-aware month/day names
+- 25+ Locale-aware month/day names
 - Lightweight formatting and parsing
 - Manual date offset support (`-3..+3`)
-
-
-## 🚀 Features
-
-- Accurate Umm Al-Qura conversion pipeline
-- Kotlin-first, simple API surface
-- 25+ locale mappings (including English, Arabic, Urdu)
-- Custom formatter/parser without heavy date-format libraries
-- Regional adjustment support via `offsetDays`
-- Test-covered core functionality
 
 ---
 
@@ -57,7 +43,7 @@ repositories {
 ```
 
 ### Step 2: Add Dependency
-Include the OPT library in your app-level build script (`build.gradle` or `build.gradle.kts`). Replace `x.x.x` with the latest version: [![](https://jitpack.io/v/orbitalsonic/SonicMuslimCalendar.svg)](https://jitpack.io/#orbitalsonic/SonicMuslimCalendar)
+Include the SonicMuslimCalendar library in your app-level build script (`build.gradle` or `build.gradle.kts`). Replace `x.x.x` with the latest version: [![](https://jitpack.io/v/orbitalsonic/SonicMuslimCalendar.svg)](https://jitpack.io/#orbitalsonic/SonicMuslimCalendar)
 
 
 #### Groovy DSL
@@ -92,7 +78,7 @@ println("Current Hijri Date: ${currentHijri.year} ${currentHijri.getMonthName(Lo
 // Output: Current Hijri Date: 1447 Shawwal 25
 ```
 
-### 2) Create custom Hijri date
+### 2) Create a custom Hijri date
 
 ```kotlin
 val hijri = MuslimCalendar(year = 1446, month = 9, day = 10)
