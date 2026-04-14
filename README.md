@@ -21,8 +21,6 @@ The Umm Al-Qura calendar is a standardized Islamic civil calendar officially use
 - Lightweight formatting and parsing
 - Manual date offset support (`-3..+3`)
 
-It is designed as a reusable module for Kotlin/JVM and Android projects.
-
 
 ## 🚀 Features
 
